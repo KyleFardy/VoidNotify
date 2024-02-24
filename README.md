@@ -1,8 +1,8 @@
 # Void Notify
 
-[Demo Of Notify](https://sweetalert2.github.io/)
+[Demo Of Notify](https://codepen.io/KyleFardy/pen/RwdzBmR)
 
-[Demo Of Toast (Click Try Me Where It Says Mixin)](https://sweetalert2.github.io/#didDestroy)
+[Demo Of Toast](https://codepen.io/KyleFardy/pen/vYPqaPG)
 
 [Join The Discord](https://discord.void-dev.co)
 
