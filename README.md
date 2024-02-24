@@ -37,7 +37,7 @@ TriggerClientEvent('VoidNotify:NOTIFY', source, "false", "Test Title", "Test Mes
 >The Message Shown
 
 ### Types 
-| Code      | Position  |
+| Type      | Colour/Image  |
 | --------- | --------- |
 | success   | Green     |
 | info      | Blue      |
