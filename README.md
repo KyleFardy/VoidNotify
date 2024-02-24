@@ -1,5 +1,7 @@
 # Void Notify
 
+![logo](https://cdn.void-dev.co/void_notify.png)
+
 [Demo Of Notify](https://codepen.io/KyleFardy/pen/RwdzBmR)
 
 [Demo Of Toast](https://codepen.io/KyleFardy/pen/vYPqaPG)
