@@ -1,9 +1,11 @@
-if Config.CheckForUpdates then
-    Citizen.CreateThread(function()
-        resource_name = "Void Notify (" .. GetCurrentResourceName() .. ")"
-        PerformHttpRequest("https://api.github.com/repos/KyleFardy/VoidNotify/releases/latest", check_version, "GET")
-    end)
-end
+AddEventHandler('onResourceStart', function(resourceName)
+    if Config.CheckForUpdates then
+        Citizen.CreateThread(function()
+            resource_name = "Void Notify (" .. GetCurrentResourceName() .. ")"
+            PerformHttpRequest("https://api.github.com/repos/KyleFardy/VoidNotify/releases/latest", check_version, "GET")
+        end)
+    end
+end)
 function check_version(err, response, headers)
     
     current_version = LoadResourceFile(GetCurrentResourceName(), "version")
