@@ -1,48 +1,81 @@
-function notify(toast, title, message, type, time, theme = "dark", position = "bottom", sound = "sound.mp3") {
-    $("#css_theme").attr("href", theme == "default" ? "default.css" : `${theme}.css`);
 
-    const notification_sound = new Audio(sound);
+function notify(is_toast, title, message, type, time, theme = "dark", position = "bottom", sound = "sound.mp3") {
+    theme = theme || "dark";
+    $("#css_theme").attr("href", (theme === "default") ? "default.css" : theme + ".css");
+
+    var notification_sound = new Audio(sound);
     notification_sound.volume = 0.8;
-
-    const commonOptions = {
-        title: title,
-        showConfirmButton: false,
-        timer: time,
-        timerProgressBar: true,
-    };
-
-    if (toast === "false") {
-        Swal.fire({
-            ...commonOptions,
-            html: message,
-            imageUrl: type.toLowerCase().includes("png" || "jpg" || "gif" || "jpeg") ? type : undefined,
-            icon: !type.toLowerCase().includes("png" || "jpg" || "gif" || "jpeg") ? type : undefined,
-        });
-    } else {
-        Swal.mixin({
-            toast: true,
-            customClass: { icon: 'no-border' },
-            iconHtml: `<img src="${type}" style="height:80px; width:80px;">`,
-            title: title,
-            position: position,
-            ...commonOptions,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-            },
-        }).fire({
-            title: toast === "false" ? message : undefined,
-        });
+    if (type.toLowerCase().indexOf("png") != -1 || type.toLowerCase().indexOf("jpg") != -1 || type.toLowerCase().indexOf("gif") != -1 || type.toLowerCase().indexOf("jpeg") != -1) {
+        if (is_toast == "false") {
+            Swal.fire({
+                title: title,
+                html: message,
+                showConfirmButton: false,
+                timer: time,
+                timerProgressBar: true,
+                imageUrl: type,
+                imageHeight: 128,
+            });
+            notification_sound.play();
+        }
+        else {
+            Swal.mixin({
+                toast: true,
+                iconHtml: `<img src="${type}" style="height:80px; width:80px;">`,
+                customClass: {
+                    icon: 'no-border'
+                },
+                title: title,
+                position: position,
+                showConfirmButton: false,
+                timer: time,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            }).fire({
+                title: message
+            });
+            notification_sound.play();
+        }
     }
-
-    notification_sound.play();
+    else {
+        if (is_toast == "false") {
+            Swal.fire({
+                title: title,
+                icon: type,
+                html: message,
+                showConfirmButton: false,
+                timer: time,
+                timerProgressBar: true,
+            });
+            notification_sound.play();
+        }
+        else {
+            Swal.mixin({
+                toast: true,
+                icon: type,
+                title: title,
+                position: position,
+                showConfirmButton: false,
+                timer: time,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            }).fire({
+                title: message
+            });
+            notification_sound.play();
+        }
+    }
 }
-
 $(function () {
     window.addEventListener('message', function (event) {
-        if (event.data.action === 'do_notification') {
-            const { toast, title, message, type, time, theme, position, sound } = event.data;
-            notify(toast, title, message, type, time, theme, position, sound);
+        if (event.data.action == 'do_notification') {
+            notify(event.data.toast, event.data.title, event.data.message, event.data.type, event.data.time, event.data.theme, event.data.position, event.data.sound);
         }
-    });
-});
+    })
+})
