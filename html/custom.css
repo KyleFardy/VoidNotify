@@ -1,0 +1,10 @@
+@charset "UTF-8";
+body {
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+@media all and (width <=768px) {
+    body {
+        padding-bottom: 0;
+    }
+}
